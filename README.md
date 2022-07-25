@@ -18,14 +18,47 @@ source scripts/install_pip.sh
 ```
 
 ## Demo
-- Download the pre-trained demo TCMR and required data by below command and download SMPL layers from [here](https://smpl.is.tue.mpg.de) (male&female) and [here](http://smplify.is.tue.mpg.de) (neutral). Put SMPL layers (pkl files) under `${ROOT}/data/base_data/`.
+- Download the pretrained SMPL layers from [here](https://smpl.is.tue.mpg.de) (male&female), [here](http://smplify.is.tue.mpg.de) (neutral) and SMPL regressor. Put SMPL layers (pkl files) under `${ROOT}/data/base_data/`. These opeartions can be realized with follwing code
 ```bash
 source scripts/get_base_data.sh
+```
+- Download pre-trained [TePose weights](https://drive.google.com/drive/folders/14FcyVy49ryBH1AuVKgBXDNqjZsi-tivY?usp=sharing). 
+
+The data directory structure should follow the below hierarchy.
+```
+${ROOT}  
+|-- data  
+|   |-- base_data  
+|   |-- pretrained_models
+|-- demo.py
+:
+:
+|-- merged_courtyard_basketball_01.mp4
 ```
 - Run demo with options (e.g. render on plain background). See more option details in bottom lines of `demo.py`.
 - A video overlayed with rendered meshes will be saved in `${ROOT}/output/demo_output/`. 
 ```bash
-python demo.py --vid_file demo.mp4 --gpu 0 
+python demo.py --vid_file merged_courtyard_basketball_01.mp4 --gpu 0 
+```
+
+
+## Running TePose
+
+Pre-processed PoseTrack, 3DPW, MPI-INF-3DHP and Human3.6M are uploaded by TCMR authors from [here](https://drive.google.com/drive/folders/1h0FxBGLqsxNvUL0J43WkTxp7WgYIBLy-?usp=sharing).
+Pre-processed InstaVariety is uploaded by VIBE authors [here](https://owncloud.tuebingen.mpg.de/index.php/s/MKLnHtPjwn24y9C).
+AMASS can be generated following the instruction provided by VIBE authors [here](https://github.com/mkocabas/VIBE/blob/master/doc/train.md).
+Download pseudo SMPL labels from [here](https://drive.google.com/drive/folders/1iLTMYMVo_BwRu3P-LpM_Bp1O6_e-xPh6?usp=sharing). You could generate it by yourself with code
+```bash
+source scripts/prepare_pseudo_thetas.sh
+```
+
+The data directory structure should follow the below hierarchy.
+```
+${ROOT}  
+|-- data  
+|   |-- base_data  
+|   |-- preprocessed_data  
+|   |-- pretrained_models
 ```
 
 ## Results
@@ -37,21 +70,6 @@ Here I report the performance of TCMR.
 
 See [our paper](https://arxiv.org/abs/2011.08627) for more details.
 
-## Running TCMR
-
-Download pre-processed data (except InstaVariety dataset) from [here](https://drive.google.com/drive/folders/1h0FxBGLqsxNvUL0J43WkTxp7WgYIBLy-?usp=sharing).
-Pre-processed InstaVariety is uploaded by VIBE authors [here](https://owncloud.tuebingen.mpg.de/index.php/s/MKLnHtPjwn24y9C).
-You may also download datasets from sources and pre-process yourself. Refer to [this](asset/data.md).
-Put SMPL layers (pkl files) under `${ROOT}/data/base_data/`.
-
-The data directory structure should follow the below hierarchy.
-```
-${ROOT}  
-|-- data  
-|   |-- base_data  
-|   |-- preprocessed_data  
-|   |-- pretrained_models
-```
 
 ### Evaluation
 
