@@ -57,62 +57,63 @@ The data directory structure should follow the below hierarchy.
 ${ROOT}  
 |-- data  
 |   |-- base_data  
+|   |   ├── J_regressor_extra.npy
+|   |   :
+|   |   └── spin_model_checkpoint.pth.tar
 |   |-- preprocessed_data  
+|   |   ├── 3dpw_test_all_db.pt
+|   |   ├── 3dpw_test_all_pseudotheta.pt
+|   |   :
+|   |   ├── posetrack_train_db.pt
+|   |   └── posetrack_train_pseudotheta.pt
 |   |-- pretrained_models
+|   |   ├── tepose_wopw_3dpw_test.pth.tar
+|   |   :
+|   |   └── tepose_wpw_mpii3d_h36m_test.pth.tar
+|-- demo.py
+:
+:
+|-- merged_courtyard_basketball_01.mp4
 ```
-
-## Results
-Here I report the performance of TCMR.
-
-
-![table](./asset/table4.png)
-![table](./asset/table6.png)
-
-See [our paper](https://arxiv.org/abs/2011.08627) for more details.
-
 
 ### Evaluation
 
-- Download pre-trained TCMR weights from [here](https://drive.google.com/drive/folders/1NxzmKw5QTGtOKgSQetkq66ZO-dbBSzrd?usp=sharing).  
-- Run the evaluation code with a corresponding config file to reproduce the performance in the tables of [our paper](https://arxiv.org/abs/2011.08627).
+- Run the evaluation code with a corresponding config file to get performance in different settings. You could also check the visual performance by adding "--render" at the end of the command.
 ```bash
 # dataset: 3dpw, mpii3d, h36m 
 python evaluate.py --dataset 3dpw --cfg ./configs/repr_table4_3dpw_model.yaml --gpu 0 
 ```
 - You may test options such as average filtering and rendering. See the bottom lines of `${ROOT}/lib/core/config.py`.
-- We checked rendering results of TCMR on 3DPW validation and test sets.
+
+## Results
+We compare proposed TePose with state-of-the-art methods in the following tables.
+
+![table](./asset/wpw.png)
+![table](./asset/wopw.png)
 
 ### Reproduction (Training)
 
-- Run the training code with a corresponding config file to reproduce the performance in the tables of [our paper](https://arxiv.org/abs/2011.08627).
-- There is a [hard coding](https://github.com/hongsukchoi/TCMR_RELEASE/blob/46462c664f1057fb3c14e2049a377e6bc071d622/lib/dataset/_dataset_3d.py#L92) related to the config file's name. Please use the exact config file to reproduce, instead of changing the content of the default config file.
+- TePose models with different settings can be trained with different configuration file. For example, training model without 3DPW as train set for evaluating on 3DPW test set (results of 4 columns on the right of first table) can be realized by following command
+
 ```bash
 # training outputs are saved in `experiments` directory
 # mkdir experiments
-python train.py --cfg ./configs/repr_table4_3dpw_model.yaml --gpu 0 
+python train.py --cfg ./configs/repr_wpw_3dpw_model.yaml --gpu 0 
 ```
 - After the training, the checkpoints are saved in `${ROOT}/experiments/{date_of_training}/`. Change the config file's `TRAIN.PRETRAINED` with the checkpoint path (either `checkpoint.pth.tar` or `model_best.pth.tar`) and follow the evaluation command.
-- You may test the motion discriminator introduced in VIBE by uncommenting the codes that have `exclude motion discriminator` notations.
 
 
 ## Reference
 ```
-@InProceedings{choi2020beyond,
-  title={Beyond Static Features for Temporally Consistent 3D Human Pose and Shape from a Video},
-  author={Choi, Hongsuk and Moon, Gyeongsik and Chang, Ju Yong and Lee, Kyoung Mu},
-  booktitle = {Conference on Computer Vision and Pattern Recognition (CVPR)}
-  year={2021}
+@inproceedings{wang2022tepose,
+  title={Live Stream Temporally Embedded 3D Human Body Pose and Shape Estimation},
+  author={Wang, Zhouping and Ostadabbas, Sarah},
+  booktitle={arXiv preprint: },
+  month     = {July},
+  year      = {2022}
 }
 ```
 
 ## License
 This project is licensed under the terms of the MIT license.
 
-### Related Projects
-
-[I2L-MeshNet_RELEASE](https://github.com/mks0601/I2L-MeshNet_RELEASE)  
-[3DCrowdNet_RELEASE](https://github.com/hongsukchoi/3DCrowdNet_RELEASE)  
-[TCMR_RELEASE](https://github.com/hongsukchoi/TCMR_RELEASE)  
-[Hand4Whole_RELEASE](https://github.com/mks0601/Hand4Whole_RELEASE)  
-[HandOccNet](https://github.com/namepllet/HandOccNet)  
-[NeuralAnnot_RELEASE](https://github.com/mks0601/NeuralAnnot_RELEASE)
