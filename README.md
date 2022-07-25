@@ -1,27 +1,23 @@
-# TCMR: Beyond Static Features for Temporally Consistent 3D Human Pose and Shape from a Video
-| Qualtitative result  | Paper teaser video |
-| ------------- | ------------- |
-| ![aa](./asset/son.gif) | ![bb](./asset/teaser.gif) |
+# Live Stream Temporally Embedded 3D Human Body Pose and Shape Estimation
 
+Contact: 
 
-## News
-- Update 22.06.17: Now you can reproduce Table 6! No change on running commands. 
-- Update 22.06.06: [NeuralAnnot](https://arxiv.org/abs/2011.11232) SMPL annotations of [Human36M](http://vision.imar.ro/human3.6m/description.php) are released!
+[Zhouping Wang](wang.zhoup@northeastern.edu)
+
+[Sarah Ostadabbas](ostadabbas@ece.neu.edu)
 
 ## Introduction
-This repository is the official [Pytorch](https://pytorch.org/) implementation of [Beyond Static Features for Temporally Consistent 3D Human Pose and Shape from a Video](https://arxiv.org/abs/2011.08627). 
-Find more qualitative results [here](https://youtu.be/WB3nTnSQDII).
-The base codes are largely borrowed from [VIBE](https://github.com/mkocabas/VIBE).
+This repository is the official PyTorch implementation of [Live Stream Temporally Embedded 3D Human Body Pose and Shape Estimation]. 
+The base codes are largely borrowed from [TCMR](https://github.com/hongsukchoi/TCMR_RELEASE).
 
 ## Installation
-TCMR is tested on Ubuntu 16.04 with Pytorch 1.4 and Python 3.7.10. 
+TePose is developed using python 3.7 on Ubuntu 18.04.
 You may need sudo privilege for the installation.
 ```bash
 source scripts/install_pip.sh
 ```
-If you have a problem related to `torchgeometry`, please check [this](https://github.com/mks0601/I2L-MeshNet_RELEASE/issues/6#issuecomment-675152527) out.
 
-## Quick demo
+## Demo
 - Download the pre-trained demo TCMR and required data by below command and download SMPL layers from [here](https://smpl.is.tue.mpg.de) (male&female) and [here](http://smplify.is.tue.mpg.de) (neutral). Put SMPL layers (pkl files) under `${ROOT}/data/base_data/`.
 ```bash
 source scripts/get_base_data.sh
